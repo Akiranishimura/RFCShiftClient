@@ -153,7 +153,7 @@ export default {
       let today = new Date();
       let todayYear = today.getFullYear();
       let todayMonth = today.getMonth() + 1;
-      let todayDate = this.Date
+      let todayDate = this.date
       // let todayMonth = 11
       let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
       this.NowShowing = todayString;
