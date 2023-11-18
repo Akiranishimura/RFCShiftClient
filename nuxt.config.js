@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'client',
+    title: 'RFCShift2023',
     htmlAttrs: {
       lang: 'en'
     },
@@ -19,6 +19,8 @@ export default {
     serverUrl: process.env.SERVER_URL
   },
   router: {
+      base: '/Shift2023/',
+      trailingSlash: true,
     middleware: ['auth']
   },
 
