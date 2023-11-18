@@ -21,6 +21,11 @@ export default {
   router: {
       base: '/Shift2023/',
       trailingSlash: true,
+      extendRoutes(routes) {
+        routes.push(
+          { path: '/log', redirect: '/log/' },
+        )
+      },
     middleware: ['auth']
   },
 
