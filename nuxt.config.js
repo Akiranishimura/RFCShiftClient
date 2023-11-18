@@ -3,7 +3,7 @@ export default {
   head: {
     title: 'RFCShift2023',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'ja'
     },
     meta: [
       { charset: 'utf-8' },
