@@ -82,7 +82,7 @@ export default {
       noShidtEnded:{
         ShiftName: '終了したシフトはありません',
       },
-      date: null,
+      date: 24,
       NowShowing: '',
       ongoing:[],
       shifts:[],
@@ -115,6 +115,7 @@ export default {
     changeDate(date){
       if(date == '1123'){
         this.date = 23
+        console.log(this.date + 'is23?')
       }
       else if(date == '1124'){
         this.date = 24
