@@ -7,7 +7,12 @@
       <LogOutBtn />
     </div>
     <TheContainer>
-      {{ currentTime }}
+      <!-- {{ currentTime }} -->
+      <button @click="changeDate('1123')">準備日のシフトを見る</button>
+      <button @click="changeDate('1124')">1日目のシフトを見る</button>
+      <button @click="changeDate('1125')">2日日のシフトを見る</button>
+      <button @click="changeDate('1126')">整理日のシフトを見る</button>
+      <button @click="changeDate('Today')">今日のシフトを見る</button>
 
 
       <section class="ongoing">
@@ -48,7 +53,7 @@
         </div>
       </section>
 
-      {{ shifts }}
+      <!-- {{ shifts }} -->
 
 
     </TheContainer>
@@ -77,6 +82,7 @@ export default {
       noShidtEnded:{
         ShiftName: '終了したシフトはありません',
       },
+      date: null,
       ongoing:[],
       shifts:[],
       following:[],
@@ -105,6 +111,24 @@ export default {
   },
 
   methods: {
+    changeDate(date){
+      if(date == '1123'){
+        this.date = 23
+      }
+      else if(date == '1124'){
+        this.date = 24
+      }
+      else if(date == '1125'){
+        this.date = 25
+      }
+      else if(date == '1126'){
+        this.date = 26
+      }
+      else if(date == 'Today'){
+        this.date = null
+      }
+    },
+
     updateStatus(){
       let currentTime = new Date();
 
@@ -126,11 +150,10 @@ export default {
       //Dateを今日の日付と比較し、今日のものだけフィルタリングする
       let today = new Date();
       let todayYear = today.getFullYear();
-      // let todayMonth = today.getMonth() + 1;
-      // let todayDate = today.getDate();
-      let todayMonth = 11
-      let todayDate = 24
-      let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T15:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
+      let todayMonth = today.getMonth() + 1;
+      let todayDate = this.Date || today.getDate();
+      // let todayMonth = 11
+      let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
       let todayDateObject = new Date(todayString);
       //todayDateObjectとShiftsのDateを比較し、一致したものをTodayShiftsに入れる
       let todayShifts = [];
