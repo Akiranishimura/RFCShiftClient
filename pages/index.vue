@@ -7,7 +7,7 @@
       <LogOutBtn />
     </div>
     <TheContainer>
-      <!-- {{ currentTime }} -->
+      {{ NowShowing }}
       <button @click="changeDate('1123')">準備日のシフトを見る</button>
       <button @click="changeDate('1124')">1日目のシフトを見る</button>
       <button @click="changeDate('1125')">2日日のシフトを見る</button>
@@ -53,7 +53,7 @@
         </div>
       </section>
 
-      <!-- {{ shifts }} -->
+      {{ shifts }}
 
 
     </TheContainer>
@@ -83,6 +83,7 @@ export default {
         ShiftName: '終了したシフトはありません',
       },
       date: null,
+      NowShowing: '',
       ongoing:[],
       shifts:[],
       following:[],
@@ -151,9 +152,10 @@ export default {
       let today = new Date();
       let todayYear = today.getFullYear();
       let todayMonth = today.getMonth() + 1;
-      let todayDate = this.Date || today.getDate();
+      let todayDate = this.Date
       // let todayMonth = 11
       let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
+      this.NowShowing = todayString;
       let todayDateObject = new Date(todayString);
       //todayDateObjectとShiftsのDateを比較し、一致したものをTodayShiftsに入れる
       let todayShifts = [];
