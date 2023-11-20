@@ -1,6 +1,6 @@
 <template>
   <div class="logoutBtn">
-    <button @click="Logout" class="shadow">期間日のシフトを確認する</button>
+    <button @click="Logout" class="shadow">期間日のシフトを確認</button>
   </div>
 </template>
 

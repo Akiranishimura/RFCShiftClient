@@ -14,7 +14,7 @@
         {{ Shift.ShiftName }}
         <!-- {{ Shift.ShiftID }} -->
       </div>
-      <div class="card__content__manual" v-if="Status != 'noShift'">
+      <div class="card__content__manual" v-if="Status =!noShift && Shift.ManualLink ">
         <a class="card__content__manual__btn shadow"
         href="https://s-union.esa.io/posts/8047"
         @click="moveToManual(Shift.ManualLink)"
@@ -52,7 +52,7 @@ export default {
       // YYYY-MM-DDTHH:mm:ss.sssをMM-DD+1に変換
       let MM = this.Shift.Date.slice(5,7);
       let DD = Number(this.Shift.Date.slice(8,10));
-      DD = DD 
+      DD = DD
       return(MM + '/' + DD)
     },
     StartTime(){

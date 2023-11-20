@@ -23,7 +23,7 @@
       <div class="loading" v-if=!calculateFinished>
         Now Loading...🔄️
       </div>
-        <div v-if="calculateFinished">
+        <div v-if="calculateFinished" class="shiftcontent">
           <section class="ongoing">
             <h1 class="ongoing__heading">現在のシフト</h1>
             <div class="shifts">
@@ -191,7 +191,7 @@ console.log(isMatched); // 結果: trueまたはfalse
       let today = new Date();
       let todayYear = today.getFullYear();
       let todayMonth = today.getMonth() + 1;
-      let todayDate =  24 //today.getDate; //今日の日付を取得する
+      let todayDate = today.getDate; //今日の日付を取得する
       let todayDatePlus1 = todayDate;
       // let todayMonth = 11
       let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
@@ -294,6 +294,7 @@ console.log(isMatched); // 結果: trueまたはfalse
   background-image: url(~/assets/images/pattern.webp);
   background-size: cover;
   background-repeat: repeat-y;
+  margin-bottom: 1rem;
 }
 .shifts{
   width: 100%;
@@ -344,5 +345,11 @@ console.log(isMatched); // 結果: trueまたはfalse
     font-weight: bold;
     color:$black;
   }
+}
+
+.shiftcontent{
+  display: flex;
+  flex-direction: column;
+  gap:1.5rem;
 }
 </style>

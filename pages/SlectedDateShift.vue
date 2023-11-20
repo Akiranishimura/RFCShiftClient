@@ -294,6 +294,7 @@ export default {
   background-image: url(~/assets/images/pattern.webp);
   background-size: cover;
   background-repeat: repeat-y;
+  margin-bottom: 1rem;
 }
 .shifts{
   margin-top: 1rem;
