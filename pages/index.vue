@@ -10,6 +10,9 @@
       </div>
     </div>
     <TheContainer>
+      <h1>
+        今日のシフト
+      </h1>
       <!-- {{ NowShowing }} -->
       <!-- {{ currentTime }}
       <br>
@@ -348,6 +351,7 @@ console.log(isMatched); // 結果: trueまたはfalse
 }
 
 .shiftcontent{
+  margin-top:1rem;
   display: flex;
   flex-direction: column;
   gap:1.5rem;
