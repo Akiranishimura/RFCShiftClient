@@ -73,7 +73,7 @@ export default {
   width: 100%;
   border-radius: 12px;
   background-color: rgba($white, 1);
-  padding:1rem 1rem 2rem 1rem;
+  padding:0.5rem 0.5rem 1rem 0.5rem;
   font-weight: bold;
 
   &__Header{
@@ -85,20 +85,20 @@ export default {
       color:$black;
       }
       &__ID{
-        font-size: 1.2rem;
+        font-size: 1rem;
         color:rgba($black, 0.1);
       }
     // font-weight: bold;
   }
   &__content{
-    margin-top: 1.5rem;
+    margin-top: 0.8rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:1.2rem;
+    gap:0.8rem;
     &__title{
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color:$black;
     }
     &__manual{
@@ -106,7 +106,7 @@ export default {
         border-radius: 12px;
         background-color: $red;
         color:$white;
-        font-size: 1rem;
+        font-size: 0.8rem;
         padding: 0.25rem 1.5rem 0.25rem 1.5rem;
         border: none;
         cursor: pointer;

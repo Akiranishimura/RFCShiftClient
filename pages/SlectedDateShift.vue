@@ -1,60 +1,42 @@
 <template>
   <div class="shiftpage">
-    <div class="header">
-      <div class="header__hi">
-        {{ fuckyoustate }} {{ $auth.user.userId }}
+    <div class="top">
+      <div class="header">
+        <div class="header__hi">
+          {{ fuckyoustate }} {{ $auth.user.userId }}
+        </div>
+        <div class="header__btn">
+          <LogOutBtn />
+          <TodayShiftBtn />
+        </div>
       </div>
-      <div class="header__btns">
-        <LogOutBtn />
-        <SelectedShiftBtn />
-      </div>
+      <TheContainer>
+        <div class="selectbtns">
+          <button  class= 'shadow' @click="changeDate('1123')">準備日<br><span class='time'>（11/23）</span></button>
+          <button class="shadow" @click="changeDate('1124')">1日目<br><span class='time'>（11/24）</span></button>
+          <button class="shadow" @click="changeDate('1125')">2日日<br><span class='time'>（11/25）</span></button>
+          <button class="shadow" @click="changeDate('1126')">整理日<br><span class='time'>（11/26）</span></button>
+        </div>
+      </TheContainer>
+
     </div>
     <TheContainer>
       <!-- {{ NowShowing }} -->
       <!-- {{ TodayShift1 }} -->
-      <!-- <button @click="changeDate('1123')">準備日のシフトを見る</button>
-      <button @click="changeDate('1124')">1日目のシフトを見る</button>
-      <button @click="changeDate('1125')">2日日のシフトを見る</button>
-      <button @click="changeDate('1126')">整理日のシフトを見る</button>
-      <button @click="changeDate('Today')">今日のシフトを見る</button> -->
 
 
-      <section class="ongoing">
-        <h1 class="ongoing__heading">現在のシフト</h1>
+      <section class="TodayShift">
+        <h1 class="shiftwrap__heading">11/{{date}}のシフト</h1>
         <div class="shifts">
-          <div class="shift" v-for="shift in ongoing" :key="shift.ShiftId">
-            <ShiftCard :Shift=shift Status="ongoing"/>
+          <div class="shift" v-for="shift in TodayShift1" :key="shift.ShiftId">
+            <ShiftCardSmall :Shift=shift Status="default"/>
           </div>
-          <div class="shift" v-if="ongoing.length == 0">
-            <ShiftCard :Shift=noShiftNow Status="noShift"/>
+          <div class="shift" v-if="TodayShift1.length == 0">
+            <ShiftCardSmall :Shift=noShiftNow Status="default"/>
           </div>
 
         </div>
 
-      </section>
-
-      <section class="following">
-        <h1 class="following__heading">次のシフト</h1>
-        <div class="shifts">
-          <div class="shift" v-for="shift in following" :key="shift.ShiftId">
-            <ShiftCard :Shift=shift Status="following" />
-          </div>
-          <div class="shift" v-if="following.length == 0">
-            <ShiftCard :Shift=noShiftNext Status="noShift"/>
-          </div>
-        </div>
-      </section>
-
-      <section class="ended">
-        <h1 class="ended__heading">終了したシフト</h1>
-        <div class="shifts">
-          <div class="shift" v-for="shift in ended" :key="shift.ShiftId">
-            <ShiftCard :Shift=shift Status="ended"/>
-          </div>
-          <div class="shift" v-if="ended.length == 0">
-            <ShiftCard :Shift=noShidtEnded Status="noShift"/>
-            </div>
-        </div>
       </section>
 
       <!-- {{ shifts }} -->
@@ -76,10 +58,9 @@ import ShiftCard from '~/components/ShiftCard.vue';
 export default {
   data() {
     return {
-      // attention:false,
       userDate: {},
       noShiftNow:{
-        ShiftName: '現在のシフトはありません',
+        ShiftName: '今日のシフトはありません',
       },
       noShiftNext:{
         ShiftName: '次のシフトはありません',
@@ -95,7 +76,7 @@ export default {
       ended:[],
       currentTime: '',
       TodayShift1:[],
-      fuckyoustate:'',
+      fuckyoustate:''
         }
   },
    middleware: 'auth',
@@ -120,16 +101,30 @@ export default {
   },
 
   methods: {
+    changeDate(date){
+      if(date == '1123'){
+        this.date = 23
+        console.log(this.date + 'is23?')
+      }
+      else if(date == '1124'){
+        this.date = 24
+      }
+      else if(date == '1125'){
+        this.date = 25
+      }
+      else if(date == '1126'){
+        this.date = 26
+      }
+    },
     fuckyou(){
       const gakuseki = this.$auth.user.userId;
-  console.log(gakuseki);
-  const fucked = ['7221067', '7421116', '6222053', '6222156', '7321154'];
+      console.log(gakuseki);
+      const fucked = ['7221067', '7421116', '6222053', '6222156', '7321154'];
 
-// gakusekiがfucked配列に含まれているかどうかを確認
-const isMatched = fucked.includes(gakuseki);
-
-console.log(isMatched); // 結果: trueまたはfalse
-     //fuckedのうちgakusekiがひとつ当てはまったときtrueになる変数をつくる
+      // gakusekiがfucked配列に含まれているかどうかを確認
+      const isMatched = fucked.includes(gakuseki);
+      console.log(isMatched); // 結果: trueまたはfalse
+          //fuckedのうちgakusekiがひとつ当てはまったときtrueになる変数をつくる
       if (isMatched){
          this.fuckyoustate = 'Hey Yo Fuck 🖕'
          return this.fuckyoustate
@@ -139,26 +134,6 @@ console.log(isMatched); // 結果: trueまたはfalse
         return this.fuckyoustate
       }
     },
-
-    // changeDate(date){
-    //   if(date == '1123'){
-    //     this.date = 23
-    //     console.log(this.date + 'is23?')
-    //   }
-    //   else if(date == '1124'){
-    //     this.date = 24
-    //   }
-    //   else if(date == '1125'){
-    //     this.date = 25
-    //   }
-    //   else if(date == '1126'){
-    //     this.date = 26
-    //   }
-    //   else if(date == 'Today'){
-    //     this.date = null
-    //   }
-    // },
-
     updateStatus(){
       let currentTime = new Date();
 
@@ -181,7 +156,7 @@ console.log(isMatched); // 結果: trueまたはfalse
       let today = new Date();
       let todayYear = today.getFullYear();
       let todayMonth = today.getMonth() + 1;
-      let todayDate = 24 - 1; //今日の日付を取得する
+      let todayDate = this.date - 1; //今日の日付を取得する
       let todayDatePlus1 = todayDate + 1;
       // let todayMonth = 11
       let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T15:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
@@ -262,9 +237,6 @@ console.log(isMatched); // 結果: trueまたはfalse
 
 
     }
-  },
-  computed: {
-
   }
 
 
@@ -272,54 +244,74 @@ console.log(isMatched); // 結果: trueまたはfalse
 </script>
 
 <style lang="scss" scoped>
+.time{
+  font-size: 0.7rem;
+  color: $gray;
+}
+.top{
+  position: sticky;
+  top:0;
+  padding-bottom: 0.5rem;
+}
+.selectbtns{
+  margin-top: 0.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap:1rem;
+  & button{
+    background-color: $white;
+    border:1px solid $black;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    padding:3px 10px 3px 10px;
+    font-weight: bold;
+    font-size: 0.8rem;
+  }
+}
+
 .shiftpage{
   background-image: url(~/assets/images/pattern.webp);
   background-size: cover;
   background-repeat: repeat-y;
 }
 .shifts{
+  margin-top: 1rem;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap:1rem;
+  gap:1.75rem;
 
 
 }
 .shift{
   width: 100%;
 }
-.ongoing{
+.shiftwrap{
   &__heading{
-    color:$red;
+    color:$black;
   }
 }
-.following{
-  &__heading{
-    color:$orange;
-  }
-}
-.ended{
-  &__heading{
-    color:$gray;
-  }
-}
+
+
+
 .header{
   background-color: $white;
-  top:0rem;
-  position:sticky;
+  // top:0rem;
+  // position:sticky;
   padding:0.5rem 0.5rem 0.5rem 0.5rem;
-    width: 100%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap:1rem;
-  &__btns{
+  &__btn{
     display: flex;
     flex-direction: column;
-    gap:0.5rem;
     align-items: flex-end;
+    gap:0.5rem;
   }
   &__hi{
     font-size: 1rem;

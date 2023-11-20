@@ -1,6 +1,6 @@
 <template>
   <div class="logoutBtn">
-    <button @click="Logout" class="shadow">ログアウト</button>
+    <button @click="Logout" class="shadow">期間日のシフトを確認する</button>
   </div>
 </template>
 
@@ -8,8 +8,8 @@
 export default {
   methods: {
     async Logout() {
-      await this.$auth.logout();
-      this.$router.push('/login/');
+      // await this.$auth.logout();
+      this.$router.push('/SlectedDateShift/');
     }
   },
 }
