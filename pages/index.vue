@@ -11,51 +11,57 @@
     </div>
     <TheContainer>
       <!-- {{ NowShowing }} -->
-      <!-- {{ TodayShift1 }} -->
+      <!-- {{ currentTime }}
+      <br>
+      {{ TodayShift1 }} -->
       <!-- <button @click="changeDate('1123')">準備日のシフトを見る</button>
       <button @click="changeDate('1124')">1日目のシフトを見る</button>
       <button @click="changeDate('1125')">2日日のシフトを見る</button>
       <button @click="changeDate('1126')">整理日のシフトを見る</button>
       <button @click="changeDate('Today')">今日のシフトを見る</button> -->
 
+      <div class="loading" v-if=!calculateFinished>
+        Now Loading...🔄️
+      </div>
+        <div v-if="calculateFinished">
+          <section class="ongoing">
+            <h1 class="ongoing__heading">現在のシフト</h1>
+            <div class="shifts">
+              <div class="shift" v-for="shift in ongoing" :key="shift.ShiftId">
+                <ShiftCard :Shift=shift Status="ongoing"/>
+              </div>
+              <div class="shift" v-if="ongoing.length == 0">
+                <ShiftCard :Shift=noShiftNow Status="noShift"/>
+              </div>
 
-      <section class="ongoing">
-        <h1 class="ongoing__heading">現在のシフト</h1>
-        <div class="shifts">
-          <div class="shift" v-for="shift in ongoing" :key="shift.ShiftId">
-            <ShiftCard :Shift=shift Status="ongoing"/>
-          </div>
-          <div class="shift" v-if="ongoing.length == 0">
-            <ShiftCard :Shift=noShiftNow Status="noShift"/>
-          </div>
-
-        </div>
-
-      </section>
-
-      <section class="following">
-        <h1 class="following__heading">次のシフト</h1>
-        <div class="shifts">
-          <div class="shift" v-for="shift in following" :key="shift.ShiftId">
-            <ShiftCard :Shift=shift Status="following" />
-          </div>
-          <div class="shift" v-if="following.length == 0">
-            <ShiftCard :Shift=noShiftNext Status="noShift"/>
-          </div>
-        </div>
-      </section>
-
-      <section class="ended">
-        <h1 class="ended__heading">終了したシフト</h1>
-        <div class="shifts">
-          <div class="shift" v-for="shift in ended" :key="shift.ShiftId">
-            <ShiftCard :Shift=shift Status="ended"/>
-          </div>
-          <div class="shift" v-if="ended.length == 0">
-            <ShiftCard :Shift=noShidtEnded Status="noShift"/>
             </div>
+
+          </section>
+
+          <section class="following">
+            <h1 class="following__heading">次のシフト</h1>
+            <div class="shifts">
+              <div class="shift" v-for="shift in following" :key="shift.ShiftId">
+                <ShiftCard :Shift=shift Status="following" />
+              </div>
+              <div class="shift" v-if="following.length == 0">
+                <ShiftCard :Shift=noShiftNext Status="noShift"/>
+              </div>
+            </div>
+          </section>
+
+          <section class="ended">
+            <h1 class="ended__heading">終了したシフト</h1>
+            <div class="shifts">
+              <div class="shift" v-for="shift in ended" :key="shift.ShiftId">
+                <ShiftCard :Shift=shift Status="ended"/>
+              </div>
+              <div class="shift" v-if="ended.length == 0">
+                <ShiftCard :Shift=noShidtEnded Status="noShift"/>
+                </div>
+            </div>
+          </section>
         </div>
-      </section>
 
       <!-- {{ shifts }} -->
 
@@ -96,6 +102,8 @@ export default {
       currentTime: '',
       TodayShift1:[],
       fuckyoustate:'',
+      isGetShift:false,
+      calculateFinished:false,
         }
   },
    middleware: 'auth',
@@ -109,6 +117,8 @@ export default {
 
     const getShiftByUserresponse = await this.$axios.$get(`/api/getinfo/shiftByUser/${userId}`);
     console.log(getShiftByUserresponse); // レスポンスをコンソールに出力
+    this.isGetShift = true
+    this.updateStatus()
     this.shifts = getShiftByUserresponse;
   },
 
@@ -181,10 +191,10 @@ console.log(isMatched); // 結果: trueまたはfalse
       let today = new Date();
       let todayYear = today.getFullYear();
       let todayMonth = today.getMonth() + 1;
-      let todayDate = 24 - 1; //今日の日付を取得する
-      let todayDatePlus1 = todayDate + 1;
+      let todayDate =  24 //today.getDate; //今日の日付を取得する
+      let todayDatePlus1 = todayDate;
       // let todayMonth = 11
-      let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T15:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
+      let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
       let todayStringPlus1 = todayYear + '-' + todayMonth + '-' + todayDatePlus1 + 'T15:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
       this.NowShowing = todayStringPlus1;
       let todayDateObject = new Date(todayString);
@@ -211,6 +221,7 @@ console.log(isMatched); // 結果: trueまたはfalse
       for(let i = 0; i < todayShifts.length; i++){
         //HH:MM形式の文字列を比較するために、HHとMMに分け、数値にする
         let shiftStartTime = todayShifts[i].StartTime;
+        // console.log(shiftStartTime);
         let shiftEndTime = todayShifts[i].EndTime;
         // let shiftStatus = this.shifts[i].Status;
         let shiftStatus = '';
@@ -243,14 +254,12 @@ console.log(isMatched); // 結果: trueまたはfalse
 
           ongoingnow.push(todayShifts[i]);
           // ongoingnowのすべてのDateをTodayStringPlus1にする
-          ongoingnow[i].Date = todayStringPlus1;
-
-
+          // ongoingnow[i].Date = todayStringPlus1;
 
         }
         else if(shiftStatus == 'following'){
           followingnow.push(todayShifts[i]);
-          followingnow[i].Date = todayStringPlus1;
+          // followingnow[i].Date = todayStringPlus1;
         }
         else if(shiftStatus == 'ended'){
           endednow.push(todayShifts[i]);
@@ -259,6 +268,9 @@ console.log(isMatched); // 結果: trueまたはfalse
       this.ongoing = ongoingnow;
       this.following = followingnow;
       this.ended = endednow;
+      if(this.isGetShift){
+        this.calculateFinished = true
+      }
 
 
     }
@@ -272,6 +284,12 @@ console.log(isMatched); // 結果: trueまたはfalse
 </script>
 
 <style lang="scss" scoped>
+.loading{
+  display: flex;
+  justify-content: center;
+  margin-top:1rem;
+  font-weight: bold;
+}
 .shiftpage{
   background-image: url(~/assets/images/pattern.webp);
   background-size: cover;

@@ -24,8 +24,10 @@
       <!-- {{ NowShowing }} -->
       <!-- {{ TodayShift1 }} -->
 
-
-      <section class="TodayShift">
+      <div class="loading" v-if=!isGetShift>
+        Now Loading...🔄️
+      </div>
+      <section class="TodayShift" v-if="isGetShift">
         <h1 class="shiftwrap__heading">11/{{date}}のシフト</h1>
         <div class="shifts">
           <div class="shift" v-for="shift in TodayShift1" :key="shift.ShiftId">
@@ -68,7 +70,7 @@ export default {
       noShidtEnded:{
         ShiftName: '終了したシフトはありません',
       },
-      date: 24,
+      date: 23,
       NowShowing: '',
       shifts:[],
       ongoing:[],
@@ -76,7 +78,8 @@ export default {
       ended:[],
       currentTime: '',
       TodayShift1:[],
-      fuckyoustate:''
+      fuckyoustate:'',
+      isGetShift:false
         }
   },
    middleware: 'auth',
@@ -90,6 +93,7 @@ export default {
 
     const getShiftByUserresponse = await this.$axios.$get(`/api/getinfo/shiftByUser/${userId}`);
     console.log(getShiftByUserresponse); // レスポンスをコンソールに出力
+    this.isGetShift = true;
     this.shifts = getShiftByUserresponse;
   },
 
@@ -97,24 +101,29 @@ export default {
   created() {
     this.fuckyou();
     this.updateStatus();
-    setInterval(this.updateStatus, 1000);
+    // setInterval(this.updateStatus, 1000);
   },
 
   methods: {
     changeDate(date){
       if(date == '1123'){
         this.date = 23
-        console.log(this.date + 'is23?')
+        // console.log(this.date + 'is23?')
+        // this.noShiftNow.ShiftName = '11/23のシフトはありません'
       }
       else if(date == '1124'){
         this.date = 24
+        // this.noShiftNow.ShiftName = '11/24のシフトはありません'
       }
       else if(date == '1125'){
         this.date = 25
+        // this.noShiftNow.ShiftName = '11/25のシフトはありません'
+
       }
       else if(date == '1126'){
         this.date = 26
       }
+      this.updateStatus()
     },
     fuckyou(){
       const gakuseki = this.$auth.user.userId;
@@ -135,6 +144,8 @@ export default {
       }
     },
     updateStatus(){
+      this.noShiftNow.ShiftName = '11/' + this.date  +'のシフトはありません'
+
       let currentTime = new Date();
 
       //時間をJSTでHH:MM形式にする
@@ -156,10 +167,10 @@ export default {
       let today = new Date();
       let todayYear = today.getFullYear();
       let todayMonth = today.getMonth() + 1;
-      let todayDate = this.date - 1; //今日の日付を取得する
-      let todayDatePlus1 = todayDate + 1;
+      let todayDate = this.date; //今日の日付を取得する
+      let todayDatePlus1 = todayDate;
       // let todayMonth = 11
-      let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T15:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
+      let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
       let todayStringPlus1 = todayYear + '-' + todayMonth + '-' + todayDatePlus1 + 'T15:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
       this.NowShowing = todayStringPlus1;
       let todayDateObject = new Date(todayString);
@@ -171,8 +182,10 @@ export default {
         if(todayDateObject.getTime() == shiftDateObject.getTime()){
           todayShifts.push(this.shifts[i]);
         }
+        this.TodayShift1 = todayShifts;
+
       }
-      this.TodayShift1 = todayShifts;
+
 
 
 
@@ -218,14 +231,14 @@ export default {
 
           ongoingnow.push(todayShifts[i]);
           // ongoingnowのすべてのDateをTodayStringPlus1にする
-          ongoingnow[i].Date = todayStringPlus1;
+          // ongoingnow[i].Date = todayStringPlus1;
 
 
 
         }
         else if(shiftStatus == 'following'){
           followingnow.push(todayShifts[i]);
-          followingnow[i].Date = todayStringPlus1;
+          // followingnow[i].Date = todayStringPlus1;
         }
         else if(shiftStatus == 'ended'){
           endednow.push(todayShifts[i]);
@@ -244,6 +257,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.loading{
+  display: flex;
+  justify-content: center;
+  margin-top:1rem;
+  font-weight: bold;
+}
+
 .time{
   font-size: 0.7rem;
   color: $gray;

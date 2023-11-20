@@ -52,7 +52,7 @@ export default {
       // YYYY-MM-DDTHH:mm:ss.sssをMM-DD+1に変換
       let MM = this.Shift.Date.slice(5,7);
       let DD = Number(this.Shift.Date.slice(8,10));
-      DD = DD +1
+      DD = DD
       return(MM + '/' + DD)
     },
     StartTime(){
