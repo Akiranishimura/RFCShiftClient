@@ -1,19 +1,19 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'RFCShift2023',
+    title: 'RFC-Shift',
     htmlAttrs: {
       lang: 'ja'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: '2023年度東京理科大学野田地区理大祭実行委員向けシフトサイト' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+      { rel: 'icon', type: 'image/x-icon', href: '/Shift2023/favicon.ico' }
+    ],
   },
   publicRuntimeConfig: {
     serverUrl: process.env.SERVER_URL
