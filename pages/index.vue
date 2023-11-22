@@ -194,7 +194,7 @@ console.log(isMatched); // 結果: trueまたはfalse
       let today = new Date();
       let todayYear = today.getFullYear();
       let todayMonth = today.getMonth() + 1;
-      let todayDate = 24;
+      let todayDate = today.getDate();
       let todayDatePlus1 = todayDate;
       // let todayMonth = 11
       let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
