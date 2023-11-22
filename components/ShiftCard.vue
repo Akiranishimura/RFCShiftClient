@@ -14,10 +14,13 @@
         {{ Shift.ShiftName }}
         <!-- {{ Shift.ShiftID }} -->
       </div>
-      <div class="card__content__manual" v-if="Status =!noShift && Shift.ManualLink ">
+      <div v-if="Shift.Location">
+       集合場所： {{ Shift.Location }}
+      </div>
+      <div class="card__content__manual" v-if="Status != 'noShift' && Shift.ManualLink != 'NULL'">
         <a class="card__content__manual__btn shadow"
-        href="https://s-union.esa.io/posts/8047"
-        @click="moveToManual(Shift.ManualLink)"
+        target="_blank"
+        :href=Shift.ManualLink
         :class="{ongoing: Status == 'ongoing',
           following:Status == 'following',
           ended:Status == 'ended',

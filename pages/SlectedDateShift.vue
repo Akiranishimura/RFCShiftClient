@@ -34,7 +34,7 @@
             <ShiftCardSmall :Shift=shift Status="default"/>
           </div>
           <div class="shift" v-if="TodayShift1.length == 0">
-            <ShiftCardSmall :Shift=noShiftNow Status="default"/>
+            <ShiftCardSmall :Shift=noShiftNow Status="noShift"/>
           </div>
 
         </div>
@@ -94,20 +94,23 @@ export default {
     const getShiftByUserresponse = await this.$axios.$get(`/api/getinfo/shiftByUser/${userId}`);
     console.log(getShiftByUserresponse); // レスポンスをコンソールに出力
     this.isGetShift = true;
+    this.updateStatus();
     this.shifts = getShiftByUserresponse;
   },
 
   //updateStatusを10秒に1回実行する
   created() {
     this.fuckyou();
+    // this.date = 23;
     this.updateStatus();
-    // setInterval(this.updateStatus, 1000);
+    setInterval(this.updateStatus, 1000);
   },
 
   methods: {
     changeDate(date){
       if(date == '1123'){
         this.date = 23
+        console.log('date set 1123')
         // console.log(this.date + 'is23?')
         // this.noShiftNow.ShiftName = '11/23のシフトはありません'
       }
@@ -144,6 +147,7 @@ export default {
       }
     },
     updateStatus(){
+      // console.log('あ')
       this.noShiftNow.ShiftName = '11/' + this.date  +'のシフトはありません'
 
       let currentTime = new Date();
