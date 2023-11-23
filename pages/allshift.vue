@@ -91,7 +91,7 @@ export default {
   {id: 29, time: "21:00~21:30"},
   {id: 30, time: "21:30~22:00"}
 ],
-      selectedDate: "2023-11-23T15:00:00.000Z"
+      // selectedDate: ""
 
     }
   },
@@ -131,7 +131,8 @@ export default {
       //今日の日付をを取得、月はいらない
       let today = new Date()
       let date = today.getDate()
-      return "2023-11-" + date + "T00:00:00.000Z"
+      console.log(date)
+      return "2023-11-" + date + "T15:00:00.000Z"
     }
   },
   methods:{
