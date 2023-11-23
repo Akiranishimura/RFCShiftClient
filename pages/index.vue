@@ -1,6 +1,6 @@
 <template>
   <div class="shiftpage">
-    {{ NowShowing }}
+    <!-- {{ NowShowing }} -->
     <div class="header">
       <div class="header__hi">
         {{ fuckyoustate }} {{ $auth.user.userId }}
