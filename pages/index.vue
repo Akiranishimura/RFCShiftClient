@@ -1,5 +1,6 @@
 <template>
   <div class="shiftpage">
+    {{ NowShowing }}
     <div class="header">
       <div class="header__hi">
         {{ fuckyoustate }} {{ $auth.user.userId }}
@@ -199,7 +200,7 @@ console.log(isMatched); // 結果: trueまたはfalse
       let todayDatePlus1 = todayDate +1;
       // let todayMonth = 11
       let todayString = todayYear + '-' + todayMonth + '-' + todayDate + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
-      let todayStringPlus1 = todayYear + '-' + todayMonth + '-' + todayDatePlus1 + 'T15:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
+      let todayStringPlus1 = todayYear + '-' + todayMonth + '-' + todayDatePlus1 + 'T00:00:00.000Z'; //なぜかT15:00:00.000Z設定になっているのでこれにする
       this.NowShowing = todayStringPlus1;
       let todayDateObject = new Date(todayString);
       //todayDateObjectとShiftsのDateを比較し、一致したものをTodayShiftsに入れる
