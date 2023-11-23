@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="popup" v-if="popupshow">
+      <PopUp  @closepopup="closepopup()" :shift='popupShift'/>
+    </div>
     <div class="Index">
       <div class="Index__time">
         時間
@@ -33,7 +36,7 @@
         <div v-for="shift in AllShiftByDate" :key="shift.ShiftID" >
          <div v-if="user.UserID.toString() == shift.UserID.toString()"
          >
-          <div :style="{'width': shift.width + 'px', 'left':shift.StartPercentage + 'px'}"  class="Shift__cells">
+          <div :style="{'width': shift.width + 'px', 'left':shift.StartPercentage + 'px'}"  class="Shift__cells" @click="changeShift(shift.ShiftID)">
             {{ shift.ShiftName }}
             <!-- {{ shift.Date }} -->
             <!-- {{ shift.StartTime }}
@@ -57,6 +60,8 @@
 export default {
   data() {
     return {
+      popupshow: false,
+      popupShift: [],
       allUser: [],
       allShift: [],
       timeIndex:[
@@ -132,11 +137,23 @@ export default {
       let today = new Date()
       let date = today.getDate()
       console.log(date)
-      return "2023-11-" + date + "T00:00:00.000Z"
+      return "2023-11-" + date + "T15:00:00.000Z"
     }
   },
   methods:{
+    closepopup(){
+      this.popupshow = false;
+    },
+    changeShift(shiftID){
+     //ShiftIDが一致するものをallShiftから捜す
+     let selectedShift = this.allShift.find((shift) => {
+       return shift.ShiftID == shiftID
+      })
+      console.log(selectedShift)
+      this.popupShift = selectedShift
+      this.popupshow = true;
 
+    }
   }
 }
 
@@ -175,6 +192,11 @@ export default {
     position: absolute;
     background-color:$white ;
     border: solid 1px $black;
+    &:hover{
+      // transform: scale(1.01);
+      // box-shadow: 0 0 1px rgba($black, 0.5);
+      border: solid 1px rgba($red, 0.8);
+    }
 
   }
 }
