@@ -192,7 +192,7 @@ console.log(isMatched); // 結果: trueまたはfalse
 
       let currentTimeJST = currentHour + ':' + currentMinute;
       this.currentTime = currentTimeJST;
-      let currentTimeNum = currentHour * 60 + currentMinute;
+      let currentTimeNum = Number(currentHour * 60 + Number(currentMinute));
 
       //Dateを今日の日付と比較し、今日のものだけフィルタリングする
       let today = new Date();
@@ -236,8 +236,8 @@ console.log(isMatched); // 結果: trueまたはfalse
         let shiftStartMinute = Number(shiftStartTime.split(':')[1]);
         let shiftEndHour = Number(shiftEndTime.split(':')[0]);
         let shiftEndMinute = Number(shiftEndTime.split(':')[1]);
-        let startTimenum = shiftStartHour * 60 + Number(shiftStartMinute);
-        let endTimenum = shiftEndHour * 60 + Number(shiftEndMinute);
+        let startTimenum = Number(shiftStartHour) * 60 + Number(shiftStartMinute);
+        let endTimenum = Number(shiftEndHour) * 60 + Number(shiftEndMinute);
         this.time = currentTimeNum;
 
         //現在の時刻とstartimeの時刻を比較する
