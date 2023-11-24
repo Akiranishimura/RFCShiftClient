@@ -1,6 +1,7 @@
 <template>
   <div class="shiftpage">
-    <!-- {{ NowShowing }} -->
+    <!-- {{ NowShowing }}
+    {{ time }} -->
     <div class="header">
       <div class="header__hi">
         {{ fuckyoustate }} {{ $auth.user.userId }}
@@ -109,6 +110,7 @@ export default {
       fuckyoustate:'',
       isGetShift:false,
       calculateFinished:false,
+      time:''
         }
   },
    middleware: 'auth',
@@ -234,14 +236,15 @@ console.log(isMatched); // 結果: trueまたはfalse
         let shiftStartMinute = Number(shiftStartTime.split(':')[1]);
         let shiftEndHour = Number(shiftEndTime.split(':')[0]);
         let shiftEndMinute = Number(shiftEndTime.split(':')[1]);
-        let startTimenum = shiftStartHour * 60 + shiftStartMinute;
-        let endTimenum = shiftEndHour * 60 + shiftEndMinute;
+        let startTimenum = shiftStartHour * 60 + Number(shiftStartMinute);
+        let endTimenum = shiftEndHour * 60 + Number(shiftEndMinute);
+        this.time = currentTimeNum;
 
         //現在の時刻とstartimeの時刻を比較する
         //現在の時刻がstartimeより大きく、endtimeより小さい場合、statusをongoingにする。
         //startimeより小さい場合、statusをfollowingにする。
         //endtimeより大きい場合、statusをendedにする。
-
+        console.log(startTimenum)
         if(currentTimeNum >= startTimenum && currentTimeNum <= endTimenum){
           shiftStatus = 'ongoing';
         }
