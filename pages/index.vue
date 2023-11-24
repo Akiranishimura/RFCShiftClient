@@ -273,6 +273,24 @@ console.log(isMatched); // 結果: trueまたはfalse
           endednow.push(todayShifts[i]);
         }
       }
+      //ongoingnowをstartTimeの早い順に並び替える
+      ongoingnow.sort(function(a,b){
+        if(a.StartTime < b.StartTime) return -1;
+        if(a.StartTime > b.StartTime) return 1;
+        return 0;
+      });
+      //followingnowをstartTimeの早い順に並び替える
+      followingnow.sort(function(a,b){
+        if(a.StartTime < b.StartTime) return -1;
+        if(a.StartTime > b.StartTime) return 1;
+        return 0;
+      });
+      //endednowをstartTimeの早い順に並び替える
+      endednow.sort(function(a,b){
+        if(a.StartTime < b.StartTime) return -1;
+        if(a.StartTime > b.StartTime) return 1;
+        return 0;
+      });
       this.ongoing = ongoingnow;
       this.following = followingnow;
       this.ended = endednow;
