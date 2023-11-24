@@ -137,7 +137,7 @@ export default {
       let today = new Date()
       let date = today.getDate()
       console.log(date)
-      return "2023-11-" + date + "T15:00:00.000Z"
+      return "2023-11-" + date + "T00:00:00.000Z"
     }
   },
   methods:{
